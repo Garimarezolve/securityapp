@@ -1,35 +1,39 @@
 package com.dew.securityapp.service;
 
-import com.dew.securityapp.dto.LoginDTO;
-import com.dew.securityapp.dto.SignUpDto;
-import com.dew.securityapp.entity.Role;
+import com.dew.securityapp.dto.*;
 import com.dew.securityapp.entity.User;
-import com.dew.securityapp.model.ERole;
-import com.dew.securityapp.repository.RoleRepository;
 import com.dew.securityapp.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTest {
     @InjectMocks
     private AuthenticationServiceImpl authenticationService;
-
     @Mock
     UserRepository userRepository;
-    @Mock
-    RoleRepository roleRepository;
 
     @Test
-    public void register_new_user() {
+    void should_register_new_user(){
+        User registerUser= testUser();
+        when((userRepository.findByEmail(Mockito.any()))).thenReturn(registerUser);
+        User user= authenticationService.fetchUserByEmail(registerUser.getEmail());
+        assertThat(user).isEqualTo(user);
+    }
 
-        SignUpDto signUpDto = testSignUpDto();
-        User user = testUser();
-        Role roles = new Role();
-        roles.setName(ERole.ROLE_ADMIN);
+    @Test
+    void should_login_existing_user(){
+        User registerUser= testUser();
+        when((userRepository.findByUsername(Mockito.any()))).thenReturn(registerUser);
+         ResponseDto response=  authenticationService.userLogin(testLoginDTO());
+        assertThat(200).isEqualTo(response.getCode());
 
     }
 

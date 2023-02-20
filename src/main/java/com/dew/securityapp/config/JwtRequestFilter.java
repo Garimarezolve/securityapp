@@ -35,7 +35,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = null;
         String jwtToken = null;
         String currentCorrId = UUID.randomUUID().toString();
-        MDC.put("requestID", currentCorrId);
+        MDC.put("requestId", currentCorrId);
 
         // JWT Token is in the form "Bearer token". Remove Bearer word and get
         // only the Token

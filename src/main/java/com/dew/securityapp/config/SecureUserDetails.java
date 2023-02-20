@@ -1,14 +1,11 @@
 package com.dew.securityapp.config;
 
 import com.dew.securityapp.entity.User;
-import com.dew.securityapp.model.ERole;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 public class SecureUserDetails implements UserDetails {
@@ -25,9 +22,6 @@ public class SecureUserDetails implements UserDetails {
         password=user.getPassword();
         email=user.getEmail();
         username=user.getUsername();
-        authorities= user.getRoles().stream()
-                    .map(role -> new SimpleGrantedAuthority(ERole.ROLE_ADMIN.name()))
-                   .collect(Collectors.toList());
     }
 
     @Override

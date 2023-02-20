@@ -7,6 +7,7 @@ import org.slf4j.MDC;
 
 @Getter
 @Setter
+
 public class SuccessResponseDto <T> implements ResponseDto<T>{
 
     protected Integer code = ApplicationConstant.HTTP_RESPONSE_SUCCESS_CODE;

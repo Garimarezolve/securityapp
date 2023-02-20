@@ -1,9 +1,8 @@
 package com.dew.securityapp.entity;
 
+import com.dew.securityapp.model.ERole;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Set;
 
 @Builder
 @NoArgsConstructor
@@ -24,10 +23,5 @@ public class User {
     private String username;
     private String email;
     private String password;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
+    private ERole role;
 }

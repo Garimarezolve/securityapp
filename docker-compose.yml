@@ -1,0 +1,24 @@
+version: "3"
+services:
+  server:
+    image: securityapp:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysqldb:3306/sample_db?useSSL=false
+    networks:
+      - my-network
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:5.7
+    networks:
+      - my-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=sample_db
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=1234
+networks:
+  my-network:
