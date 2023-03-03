@@ -8,6 +8,7 @@ import com.dew.securityapp.repository.UserRepository;
 import com.dew.securityapp.service.AuthenticationService;
 import com.dew.securityapp.util.JwtTokenUtil;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,9 +51,9 @@ public class AuthController {
 
     @PostMapping("/signup")
     @TrackExecutionTime
-    public ResponseDto registerUser(@RequestBody SignUpDto signUpDto){
+    public ResponseDto registerUser(@Valid  @RequestBody SignUpDto signUpDto){
         log.info("Register New  User for request {}", signUpDto);
-      return  authenticationService.registerUser(signUpDto);
+         return  authenticationService.registerUser(signUpDto);
 
     }
 

@@ -1,6 +1,7 @@
 package com.dew.securityapp.service;
 
 import com.dew.securityapp.advice.TrackExecutionTime;
+import com.dew.securityapp.config.CustomUserDetailsService;
 import com.dew.securityapp.constant.ApplicationConstant;
 import com.dew.securityapp.dto.*;
 import com.dew.securityapp.entity.User;
@@ -25,6 +26,8 @@ public class AuthenticationServiceImpl implements  AuthenticationService{
     private  final AuthenticationManager authenticationManager;
 
     private final JwtTokenUtil jwtTokenUtil;
+
+    private  final CustomUserDetailsService customUserDetailsService;
 
 
     @Override
@@ -58,12 +61,16 @@ public class AuthenticationServiceImpl implements  AuthenticationService{
         if(existingUser == null){
             return new ErrorResponseDto(ApplicationConstant.NOT_FOUND,
                     ApplicationConstant.NOT_FOUND_MSG);
+        } else if (!passwordEncoder.matches(loginDTO.password(),existingUser.getPassword())) {
+            return  new ErrorResponseDto(ApplicationConstant.ERROR_STATUS_CODE,ApplicationConstant.PASSWORD_NOT_MATCH);
+        }else{
+            return new SuccessResponseDto(UserDto.builder()
+                    .id(existingUser.getId())
+                    .name(existingUser.getName())
+                    .email(existingUser.getEmail())
+                    .username(existingUser.getUsername()).build());
         }
-        return new SuccessResponseDto(UserDto.builder()
-                .id(existingUser.getId())
-                .name(existingUser.getName())
-                .email(existingUser.getEmail())
-                .username(existingUser.getUsername()).build());
+
     }
 
     @Override

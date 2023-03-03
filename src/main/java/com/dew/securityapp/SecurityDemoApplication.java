@@ -24,8 +24,8 @@ public class SecurityDemoApplication  implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		log.info("------------properties---------");
+		/*log.info("------------properties---------");
 		log.info("Username : "+vaultConfig.getUsername());
-		log.info("Token : "+vaultConfig.getToken());
+		log.info("Token : "+vaultConfig.getToken());*/
 	}
 }

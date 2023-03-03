@@ -13,4 +13,6 @@ public class ApplicationConstant {
     public static final String NOT_FOUND_MSG = "UserName or Email Not Found";
     public static final String CREATED_MSG = "  User Created Successfully";
     public static final String USER_ALREADY_EXIST = "Username is already exist";
+    public static final String PASSWORD_NOT_MATCH = "Invalid Password";
+    public static final String BAD_Request = "Bad Request";
 }
