@@ -9,8 +9,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -20,6 +22,8 @@ class AuthServiceTest {
     @Mock
     UserRepository userRepository;
 
+    @Mock
+    PasswordEncoder passwordEncoder;
     @Test
     void should_register_new_user(){
         User registerUser= testUser();
@@ -32,6 +36,7 @@ class AuthServiceTest {
     void should_login_existing_user(){
         User registerUser= testUser();
         when((userRepository.findByUsername(Mockito.any()))).thenReturn(registerUser);
+        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
          ResponseDto response=  authenticationService.userLogin(testLoginDTO());
         assertThat(200).isEqualTo(response.getCode());
 
