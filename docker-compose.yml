@@ -1,24 +1,31 @@
-version: "3"
+version: '3.1'
 services:
-  server:
-    image: securityapp:latest
+  app:
+    container_name: securityapp
+    image: securityapp
+    build: ./
     ports:
       - "8080:8080"
-    environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3306/sample_db?useSSL=false
-    networks:
-      - my-network
     depends_on:
-      - mysqldb
-
-  mysqldb:
-    image: mysql:5.7
-    networks:
-      - my-network
+      - postgres
     environment:
-      - MYSQL_ROOT_PASSWORD=1234
-      - MYSQL_DATABASE=sample_db
-      - MYSQL_USER=sa
-      - MYSQL_PASSWORD=1234
-networks:
-  my-network:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/sample_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  postgres:
+    image: postgres:14.0-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=sample_db
+  vault:
+    image: vault:latest
+    ports:
+      - "8200:8200"
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=42cb7d9ae582317004e19f0b1661b923
+      - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200
+      - VAULT_ADDR=http://127.0.0.1:8200

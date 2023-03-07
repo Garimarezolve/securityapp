@@ -64,7 +64,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         SignUpDto signUpDto= new SignUpDto();
         signUpDto.setEmail("testuser@gmail.com");
         signUpDto.setUsername("testuser@gmail.com");
-        //signUpDto.setPassword("test@123");
+        signUpDto.setPassword("test@123");
         signUpDto.setName("testUser");
         User user= new User();
         user.setName(signUpDto.getName());

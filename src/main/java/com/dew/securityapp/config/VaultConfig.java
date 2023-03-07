@@ -1,3 +1,4 @@
+/*
 package com.dew.securityapp.config;
 
 import lombok.Getter;
@@ -14,3 +15,4 @@ public class VaultConfig {
     private String username;
     public String token;
 }
+*/
